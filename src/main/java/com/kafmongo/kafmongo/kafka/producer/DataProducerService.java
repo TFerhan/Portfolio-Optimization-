@@ -76,7 +76,8 @@ public class DataProducerService {
                     
                     
                      DailyPriceStock dailyStock = new DailyPriceStock();
-                     dailyStock.put("id", String.valueOf(count++));
+
+                     dailyStock.put("ticker", ticker);
                     for (String key : record.keySet()) {
                     	try {
 	                    	if(!(record.get(key) instanceof String)) {

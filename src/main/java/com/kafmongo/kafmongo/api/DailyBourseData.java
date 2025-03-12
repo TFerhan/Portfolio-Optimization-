@@ -37,15 +37,11 @@ public class DailyBourseData {
     public static void main(String[] args) {
         // Example usage
         try {
-			String start = null;
+			String start = "2017-01-01";
 			String finish = null;
-			Integer period = 3;
+			Integer period = 0;
 			Map<String, JSONArray> dataSymbols = getSymbolData("ADH", start, finish, period);
-			for (Map.Entry<String, JSONArray> entry : dataSymbols.entrySet()) {
-				String ticker = entry.getKey();
-				JSONArray data = entry.getValue();
-				System.out.println("Data for " + ticker + ": " + data);
-			}
+			System.out.println(dataSymbols.get("ADH").length());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,15 +82,15 @@ public class DailyBourseData {
                             + "&filter%%5Bpublished%%5D=1&page%%5Boffset%%5D=0"
                             + "&filter%%5Bfilter-date-start-vh%%5D%%5Bcondition%%5D%%5Bpath%%5D=field_seance_date"
                             + "&filter%%5Bfilter-date-start-vh%%5D%%5Bcondition%%5D%%5Boperator%%5D=%%3E%%3D"
-                            + "&filter%%5Bfilter-date-start-vh%%5D%%5Bcondition%%5D%%5Bvalue%%5D=%s"
+                            + "&filter%%5Bfilter-date-start-vh%%5D%%5Bcondition%%5D%%5Bvalue%%5D=2010-01-01"
                             + "&filter%%5Bfilter-date-end-vh%%5D%%5Bcondition%%5D%%5Bpath%%5D=field_seance_date"
                             + "&filter%%5Bfilter-date-end-vh%%5D%%5Bcondition%%5D%%5Boperator%%5D=%%3C%%3D"
                             + "&filter%%5Bfilter-date-end-vh%%5D%%5Bcondition%%5D%%5Bvalue%%5D=%s"
                             + "&filter%%5Bfilter-historique-instrument-emetteur%%5D%%5Bcondition%%5D%%5Bpath%%5D=symbol.meta.drupal_internal__target_id"
                             + "&filter%%5Bfilter-historique-instrument-emetteur%%5D%%5Bcondition%%5D%%5Boperator%%5D=%%3D"
                             + "&filter%%5Bfilter-historique-instrument-emetteur%%5D%%5Bcondition%%5D%%5Bvalue%%5D=%s"
-                            + "&page%%5Boffset%%5D=0&page%%5Blimit%%5D=1000000",
-                    start, finish, symbol);
+                            + "&page%%5Boffset%%5D=0&page%%5Blimit%%5D=1000000000000",
+                     finish, symbol);
 
             return params;
 

@@ -12,8 +12,14 @@ public class BourseService {
 	@Autowired
 	private BourseRepo bourseRepo;
 	
-	public BourseModel save(BourseModel bourseModel) {
-		return bourseRepo.save(bourseModel);
+	public void save(BourseModel bourseModel) {
+		boolean exists = bourseRepo.existsByTickerAndFieldTransactTime(
+	            bourseModel.getTicker(), bourseModel.getFieldDateApplication()
+	        );
+			if (!exists) {
+				bourseRepo.save(bourseModel);
+			}
+		
 	}
 	
 	

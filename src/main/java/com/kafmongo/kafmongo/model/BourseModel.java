@@ -1,6 +1,7 @@
 package com.kafmongo.kafmongo.model;
 
 import org.springframework.data.annotation.Id;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.TimeSeries;
@@ -10,11 +11,17 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+
+//@CompoundIndex(name = "ticker_date", def = "{'ticker' : 1, 'fieldDateApplication' : 1}", unique = true)
+
+
 @Document(collection = "DataBourseTime")
-@TimeSeries(timeField = "fieldTransactTime", metaField = "ticker") 
+@TimeSeries(timeField = "fieldTransactTime", metaField = "ticker")
+
 public class BourseModel {
-	@Id
-	private String id;
+	//@Id
+	//private String id;
 
     
 

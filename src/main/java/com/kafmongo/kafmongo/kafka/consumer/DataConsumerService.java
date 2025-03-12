@@ -13,7 +13,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kafmongo.kafmongo.Repo.BourseRepo;
-import com.kafmongo.kafmongo.Service.DailyIndexService;
+import com.kafmongo.kafmongo.Service.*;
 import com.kafmongo.kafmongo.Service.DailyPriceService;
 import com.kafmongo.kafmongo.model.BourseModel;
 import com.kafmongo.kafmongo.model.DailyIndexModel;
@@ -31,7 +31,7 @@ import com.kafmongo.kafmongo.Repo.*;
 public class DataConsumerService {
 	
 	@Autowired
-	private BourseRepo bourseRepo;
+	private BourseService bourseService;
 	
 	@Autowired
 	private DailyPriceService dailyPriceService;
@@ -41,6 +41,9 @@ public class DataConsumerService {
 	
 	@Autowired
 	private DailyIndexService dailyIndexService;
+	
+	@Autowired
+	private IndexRTService indexRTService;
 	
 	//@KafkaListener(topics = "intraday-stock-prices", groupId = "group_id")
 	public void consume(ConsumerRecord<String, byte[]> record) {
@@ -53,7 +56,7 @@ public class DataConsumerService {
 	            BourseData bourseData = deserializeFromAvro(avroData);
 	            JSONObject jsonObject = new JSONObject(bourseData);
 	            BourseModel bourseEntity = mapToEntity(bourseData);
-	            bourseRepo.save(bourseEntity);
+	            bourseService.save(bourseEntity);
 	            System.out.println("Saved mongodb: " + record.key());
 	            // Here you can process the bourseData object
 	            
@@ -63,7 +66,7 @@ public class DataConsumerService {
 	        }
 	    }
 	
-	@KafkaListener(topics = "intraday-index-prices", groupId = "group_id")
+	//@KafkaListener(topics = "intraday-index-prices", groupId = "group_id")
 	public void consumeIndexRt(ConsumerRecord<String, byte[]> record) {
 		try {
 			byte[] avroData = record.value();
@@ -71,7 +74,7 @@ public class DataConsumerService {
 			IndexRTSchema indexData = deserializeFromAvroIndexRT(avroData);
 			JSONObject jsonObject = new JSONObject(indexData);
 			IndexRTModel indexEntity = mapToEntityIndexRT(indexData);
-			indexRTRepo.save(indexEntity);
+			indexRTService.save(indexEntity);
 			System.out.println("Saved in mongodb: " + record.key());
  		} catch (Exception e) {
  			            System.err.printf("Error processing record : %s\n", e.getMessage());
@@ -120,7 +123,7 @@ public class DataConsumerService {
 	}
 
 	private IndexRTSchema deserializeFromAvroIndexRT(byte[] avroData) throws Exception {
-		// TODO Auto-generated method stub
+		
 		ByteArrayInputStream in = new ByteArrayInputStream(avroData);
 		DatumReader<IndexRTSchema> datum = new SpecificDatumReader<>(IndexRTSchema.class);
 		BinaryDecoder decoder = DecoderFactory.get().binaryDecoder(in, null);
@@ -153,14 +156,11 @@ public class DataConsumerService {
     
 
     private BourseData deserializeFromAvro(byte[] data) throws Exception {
-        // Create a ByteArrayInputStream from the binary data
-        ByteArrayInputStream in = new ByteArrayInputStream(data);
         
-
-        // Use the SpecificDatumReader to read the Avro data into a BourseData object
+        ByteArrayInputStream in = new ByteArrayInputStream(data);
         DatumReader<BourseData> datumReader = new SpecificDatumReader<>(BourseData.class);
 
-        // Create a BinaryDecoder from the input stream
+        
         BinaryDecoder decoder = DecoderFactory.get().binaryDecoder(in, null);
         
 
@@ -233,6 +233,7 @@ public class DataConsumerService {
     
     private DailyPrice mapToEntityDailyPrice(DailyPriceStock dailyStock) {
     	DailyPrice entity = new DailyPrice();
+    	entity.setTicker(dailyStock.getTicker());
     	entity.setCapitalisation(dailyStock.getCapitalisation());
     	entity.setClosingPrice(dailyStock.getClosingPrice());
     	entity.setCoursAjuste(dailyStock.getCoursAjuste());

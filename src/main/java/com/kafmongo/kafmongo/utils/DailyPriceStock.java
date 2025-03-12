@@ -12,13 +12,12 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-/** Schema for daily stock price data */
 @org.apache.avro.specific.AvroGenerated
 public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5199553908154614927L;
+  private static final long serialVersionUID = 1747218198627286753L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DailyPriceStock\",\"namespace\":\"com.kafmongo.kafmongo.utils\",\"doc\":\"Schema for daily stock price data\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"created\",\"type\":\"string\"},{\"name\":\"ratioConsolide\",\"type\":\"string\"},{\"name\":\"totalTrades\",\"type\":\"string\"},{\"name\":\"coursCourant\",\"type\":\"string\"},{\"name\":\"libelleFR\",\"type\":\"string\"},{\"name\":\"openingPrice\",\"type\":\"string\"},{\"name\":\"lowPrice\",\"type\":\"string\"},{\"name\":\"coursAjuste\",\"type\":\"string\"},{\"name\":\"highPrice\",\"type\":\"string\"},{\"name\":\"closingPrice\",\"type\":\"string\"},{\"name\":\"cumulTitresEchanges\",\"type\":\"string\"},{\"name\":\"capitalisation\",\"type\":\"string\"},{\"name\":\"cumulVolumeEchange\",\"type\":\"string\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DailyPriceStock\",\"namespace\":\"com.kafmongo.kafmongo.utils\",\"fields\":[{\"name\":\"ticker\",\"type\":\"string\"},{\"name\":\"created\",\"type\":\"string\"},{\"name\":\"ratioConsolide\",\"type\":\"string\"},{\"name\":\"totalTrades\",\"type\":\"string\"},{\"name\":\"coursCourant\",\"type\":\"string\"},{\"name\":\"libelleFR\",\"type\":\"string\"},{\"name\":\"openingPrice\",\"type\":\"string\"},{\"name\":\"lowPrice\",\"type\":\"string\"},{\"name\":\"coursAjuste\",\"type\":\"string\"},{\"name\":\"highPrice\",\"type\":\"string\"},{\"name\":\"closingPrice\",\"type\":\"string\"},{\"name\":\"cumulTitresEchanges\",\"type\":\"string\"},{\"name\":\"capitalisation\",\"type\":\"string\"},{\"name\":\"cumulVolumeEchange\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -74,7 +73,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
     return DECODER.decode(b);
   }
 
-  private java.lang.CharSequence id;
+  private java.lang.CharSequence ticker;
   private java.lang.CharSequence created;
   private java.lang.CharSequence ratioConsolide;
   private java.lang.CharSequence totalTrades;
@@ -98,7 +97,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
 
   /**
    * All-args constructor.
-   * @param id The new value for id
+   * @param ticker The new value for ticker
    * @param created The new value for created
    * @param ratioConsolide The new value for ratioConsolide
    * @param totalTrades The new value for totalTrades
@@ -113,8 +112,8 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
    * @param capitalisation The new value for capitalisation
    * @param cumulVolumeEchange The new value for cumulVolumeEchange
    */
-  public DailyPriceStock(java.lang.CharSequence id, java.lang.CharSequence created, java.lang.CharSequence ratioConsolide, java.lang.CharSequence totalTrades, java.lang.CharSequence coursCourant, java.lang.CharSequence libelleFR, java.lang.CharSequence openingPrice, java.lang.CharSequence lowPrice, java.lang.CharSequence coursAjuste, java.lang.CharSequence highPrice, java.lang.CharSequence closingPrice, java.lang.CharSequence cumulTitresEchanges, java.lang.CharSequence capitalisation, java.lang.CharSequence cumulVolumeEchange) {
-    this.id = id;
+  public DailyPriceStock(java.lang.CharSequence ticker, java.lang.CharSequence created, java.lang.CharSequence ratioConsolide, java.lang.CharSequence totalTrades, java.lang.CharSequence coursCourant, java.lang.CharSequence libelleFR, java.lang.CharSequence openingPrice, java.lang.CharSequence lowPrice, java.lang.CharSequence coursAjuste, java.lang.CharSequence highPrice, java.lang.CharSequence closingPrice, java.lang.CharSequence cumulTitresEchanges, java.lang.CharSequence capitalisation, java.lang.CharSequence cumulVolumeEchange) {
+    this.ticker = ticker;
     this.created = created;
     this.ratioConsolide = ratioConsolide;
     this.totalTrades = totalTrades;
@@ -140,7 +139,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
   @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return id;
+    case 0: return ticker;
     case 1: return created;
     case 2: return ratioConsolide;
     case 3: return totalTrades;
@@ -163,7 +162,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.lang.CharSequence)value$; break;
+    case 0: ticker = (java.lang.CharSequence)value$; break;
     case 1: created = (java.lang.CharSequence)value$; break;
     case 2: ratioConsolide = (java.lang.CharSequence)value$; break;
     case 3: totalTrades = (java.lang.CharSequence)value$; break;
@@ -182,20 +181,20 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
   }
 
   /**
-   * Gets the value of the 'id' field.
-   * @return The value of the 'id' field.
+   * Gets the value of the 'ticker' field.
+   * @return The value of the 'ticker' field.
    */
-  public java.lang.CharSequence getId() {
-    return id;
+  public java.lang.CharSequence getTicker() {
+    return ticker;
   }
 
 
   /**
-   * Sets the value of the 'id' field.
+   * Sets the value of the 'ticker' field.
    * @param value the value to set.
    */
-  public void setId(java.lang.CharSequence value) {
-    this.id = value;
+  public void setTicker(java.lang.CharSequence value) {
+    this.ticker = value;
   }
 
   /**
@@ -460,7 +459,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<DailyPriceStock>
     implements org.apache.avro.data.RecordBuilder<DailyPriceStock> {
 
-    private java.lang.CharSequence id;
+    private java.lang.CharSequence ticker;
     private java.lang.CharSequence created;
     private java.lang.CharSequence ratioConsolide;
     private java.lang.CharSequence totalTrades;
@@ -486,8 +485,8 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
      */
     private Builder(com.kafmongo.kafmongo.utils.DailyPriceStock.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.ticker)) {
+        this.ticker = data().deepCopy(fields()[0].schema(), other.ticker);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.created)) {
@@ -550,8 +549,8 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
      */
     private Builder(com.kafmongo.kafmongo.utils.DailyPriceStock other) {
       super(SCHEMA$, MODEL$);
-      if (isValidValue(fields()[0], other.id)) {
-        this.id = data().deepCopy(fields()[0].schema(), other.id);
+      if (isValidValue(fields()[0], other.ticker)) {
+        this.ticker = data().deepCopy(fields()[0].schema(), other.ticker);
         fieldSetFlags()[0] = true;
       }
       if (isValidValue(fields()[1], other.created)) {
@@ -609,41 +608,41 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
     }
 
     /**
-      * Gets the value of the 'id' field.
+      * Gets the value of the 'ticker' field.
       * @return The value.
       */
-    public java.lang.CharSequence getId() {
-      return id;
+    public java.lang.CharSequence getTicker() {
+      return ticker;
     }
 
 
     /**
-      * Sets the value of the 'id' field.
-      * @param value The value of 'id'.
+      * Sets the value of the 'ticker' field.
+      * @param value The value of 'ticker'.
       * @return This builder.
       */
-    public com.kafmongo.kafmongo.utils.DailyPriceStock.Builder setId(java.lang.CharSequence value) {
+    public com.kafmongo.kafmongo.utils.DailyPriceStock.Builder setTicker(java.lang.CharSequence value) {
       validate(fields()[0], value);
-      this.id = value;
+      this.ticker = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'id' field has been set.
-      * @return True if the 'id' field has been set, false otherwise.
+      * Checks whether the 'ticker' field has been set.
+      * @return True if the 'ticker' field has been set, false otherwise.
       */
-    public boolean hasId() {
+    public boolean hasTicker() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'id' field.
+      * Clears the value of the 'ticker' field.
       * @return This builder.
       */
-    public com.kafmongo.kafmongo.utils.DailyPriceStock.Builder clearId() {
-      id = null;
+    public com.kafmongo.kafmongo.utils.DailyPriceStock.Builder clearTicker() {
+      ticker = null;
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -1173,7 +1172,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
     public DailyPriceStock build() {
       try {
         DailyPriceStock record = new DailyPriceStock();
-        record.id = fieldSetFlags()[0] ? this.id : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.ticker = fieldSetFlags()[0] ? this.ticker : (java.lang.CharSequence) defaultValue(fields()[0]);
         record.created = fieldSetFlags()[1] ? this.created : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.ratioConsolide = fieldSetFlags()[2] ? this.ratioConsolide : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.totalTrades = fieldSetFlags()[3] ? this.totalTrades : (java.lang.CharSequence) defaultValue(fields()[3]);
@@ -1219,7 +1218,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeString(this.id);
+    out.writeString(this.ticker);
 
     out.writeString(this.created);
 
@@ -1254,7 +1253,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.id = in.readString(this.id instanceof Utf8 ? (Utf8)this.id : null);
+      this.ticker = in.readString(this.ticker instanceof Utf8 ? (Utf8)this.ticker : null);
 
       this.created = in.readString(this.created instanceof Utf8 ? (Utf8)this.created : null);
 
@@ -1286,7 +1285,7 @@ public class DailyPriceStock extends org.apache.avro.specific.SpecificRecordBase
       for (int i = 0; i < 14; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.id = in.readString(this.id instanceof Utf8 ? (Utf8)this.id : null);
+          this.ticker = in.readString(this.ticker instanceof Utf8 ? (Utf8)this.ticker : null);
           break;
 
         case 1:

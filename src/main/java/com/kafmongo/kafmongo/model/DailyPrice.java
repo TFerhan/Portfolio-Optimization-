@@ -21,8 +21,9 @@ import java.time.LocalDateTime;
 @IdClass(DailyPriceId.class)
 @Table(name = "DailyPrice")
 public class DailyPrice {
-    @Column
-    private Long id;
+    @Id
+    @Column(name="ticker")
+    private String ticker;
 
     @Id
     @Column(name = "created", nullable = false)
@@ -37,7 +38,7 @@ public class DailyPrice {
     @Column(name = "coursCourant", nullable = true)
     private float coursCourant;
 
-    @Id
+    
     @Column(name = "libelleFR", nullable = true)
     private String libelleFR;
 
@@ -100,6 +101,10 @@ public class DailyPrice {
 
     public void setLibelleFR(CharSequence libelleFR) {
         this.libelleFR = (libelleFR != null) ? libelleFR.toString() : "";
+    }
+    
+    public void setTicker(CharSequence ticker) {
+        this.ticker = (ticker != null) ? ticker.toString() : "";
     }
 
     public void setOpeningPrice(CharSequence openingPrice) {

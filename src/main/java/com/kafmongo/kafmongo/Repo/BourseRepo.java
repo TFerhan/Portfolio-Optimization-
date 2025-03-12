@@ -8,10 +8,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface BourseRepo extends MongoRepository<BourseModel, String> {
 
-	//List<BourseModel> findByDate(Date date);
+	boolean existsByTickerAndFieldTransactTime(String ticker, Date fieldTransactTime);
 	
 	
-	//BourseModel findByTicker(String ticker);
+	
+	
 	
 	
 

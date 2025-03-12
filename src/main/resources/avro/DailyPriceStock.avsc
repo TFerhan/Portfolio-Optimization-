@@ -4,7 +4,7 @@
   "namespace": "com.kafmongo.kafmongo.utils",
   "fields": [
     {
-      "name": "id",
+      "name": "ticker",
       "type": "string"
     },
     {

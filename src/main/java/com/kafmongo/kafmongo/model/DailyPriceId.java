@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class DailyPriceId implements Serializable {
-    private String libelleFR;
+    private String ticker;
     private LocalDate created;
 
     // Constructeurs, getters, setters et equals/hashCode
@@ -11,8 +11,8 @@ public class DailyPriceId implements Serializable {
     public DailyPriceId() {
     }
 
-    public DailyPriceId(String libelleFR, LocalDate created) {
-        this.libelleFR = libelleFR;
+    public DailyPriceId(String ticker, LocalDate created) {
+        this.ticker = ticker;
         this.created = created;
     }
 }

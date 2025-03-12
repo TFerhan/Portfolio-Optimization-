@@ -2,6 +2,7 @@ package com.kafmongo.kafmongo.model;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.TimeSeries;
@@ -17,10 +18,10 @@ import java.util.Date;
 
 @Document(collection = "DataIndexRT")
 @TimeSeries(timeField = "fieldTransactTime", metaField = "index")
+
 public class IndexRTModel {
 	
-	@Id
-	private String id;
+	
 	
     private Float fieldMarketCapitalisation;
     private Date fieldTransactTime;
