@@ -225,6 +225,10 @@ public class DailyPrice {
     public float getCumulVolumeEchange() {
         return cumulVolumeEchange;
     }
+    
+	public String getTicker() {
+		return ticker;
+	}
 
     @Override
     public String toString() {
