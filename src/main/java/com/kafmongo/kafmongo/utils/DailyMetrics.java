@@ -1,6 +1,7 @@
 package com.kafmongo.kafmongo.utils;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class DailyMetrics {
 
@@ -14,7 +15,7 @@ public class DailyMetrics {
      * - Monthly returns: month_start
      * - Illiquidity & Daily returns: created
      */
-    private LocalDateTime date;
+    private Date date;
     
     // For weekly returns
     private Double weeklyLogReturn;
@@ -27,7 +28,7 @@ public class DailyMetrics {
     private Double avgMonthly;
     
     // For daily returns
-    private Double dailyReturns;
+    private Double dreturns;
     private Double avgReturns;
     private Double stdReturns;
     
@@ -38,6 +39,17 @@ public class DailyMetrics {
     
     public DailyMetrics() {
     }
+    
+    
+    public DailyMetrics(String ticker, Date date, Double dreturns) {
+        this.ticker = ticker;
+        this.date = date;
+        this.dreturns = dreturns;
+        this.monthlyLogReturn = dreturns;
+        this.weeklyLogReturn = dreturns;
+     
+    }
+
 
     // You might want to add additional constructors depending on your needs
 
@@ -51,11 +63,11 @@ public class DailyMetrics {
         this.ticker = ticker;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -108,11 +120,11 @@ public class DailyMetrics {
     }
 
     public Double getDailyReturns() {
-        return dailyReturns;
+        return dreturns;
     }
 
     public void setDailyReturns(Double dailyReturns) {
-        this.dailyReturns = dailyReturns;
+        this.dreturns = dailyReturns;
     }
 
     public Double getAvgReturns() {
@@ -151,7 +163,7 @@ public class DailyMetrics {
                 ", monthlyLogReturn=" + monthlyLogReturn +
                 ", stdMonthly=" + stdMonthly +
                 ", avgMonthly=" + avgMonthly +
-                ", dailyReturns=" + dailyReturns +
+                ", dailyReturns=" + dreturns +
                 ", avgReturns=" + avgReturns +
                 ", stdReturns=" + stdReturns +
                 ", illiquidityRatio=" + illiquidityRatio +

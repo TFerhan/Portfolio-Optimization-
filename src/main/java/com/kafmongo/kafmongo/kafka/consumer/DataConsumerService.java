@@ -82,7 +82,7 @@ public class DataConsumerService {
  		}
 	}
 	
-	@KafkaListener(topics = "daily-index", groupId = "group_id")
+	//@KafkaListener(topics = "daily-index", groupId = "group_id")
 	public void consumeDailyIndex(ConsumerRecord<String, byte[]> record) {
 		System.out.println("Consuming daily index data ...");
 		try {

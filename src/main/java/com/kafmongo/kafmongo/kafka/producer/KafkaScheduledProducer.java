@@ -45,14 +45,14 @@ public class KafkaScheduledProducer {
 	            //JSONArray bourseData = dataFetchService.aralya_data();
 	            //producerService.sendBourseDataToKafka(bourseData, "intraday-stock-prices");
 	
-	            //Map<String, JSONArray> dailyPrices = dailyBourseData.getAllDataSymbols("2020-01-01", null, null);
+	            //Map<String, JSONArray> dailyPrices = dailyBourseData.getAllDataSymbols("2025-04-05", null, null);
 	            //producerService.sendDailyPriceDataToKafka(dailyPrices, "daily-prices");
 	
 	            //JSONArray indexData = indexRealTimeData.aralya_data();
 	            //producerService.sendIndexRTData(indexData, "intraday-index-prices");
 	        	
-	        	Map<String, JSONArray> data = dailyIndexData.getDataOfAllIndex(null, null, 10000);
-	        	producerService.sendDailyIndexDataToKafka(data, "daily-index");
+	        	//Map<String, JSONArray> data = dailyIndexData.getDataOfAllIndex(null, null, 10000);
+	        	//producerService.sendDailyIndexDataToKafka(data, "daily-index");
 	
 	            System.out.println("Data successfully sent to Kafka at: " + System.currentTimeMillis());
 	
