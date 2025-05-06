@@ -10,6 +10,7 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import org.apache.kafka.clients.admin.NewTopic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,18 @@ public class KafkaProducerConfig {
         public KafkaTemplate<String, byte[]> kafkaTemplate() {
             return new KafkaTemplate<>(producerFactory());
         }
+        
+        @Bean
+		public NewTopic intradayStock() {
+			return new NewTopic("intraday-stock-prices", 11, (short) 2);
+		}
+        
+        @Bean
+		public NewTopic weights() {
+			return new NewTopic("stock_weights", 5, (short) 1);
+		}
+        
+        
         
         
         

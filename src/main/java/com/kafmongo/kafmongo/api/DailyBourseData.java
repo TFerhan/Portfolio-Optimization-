@@ -34,18 +34,7 @@ public class DailyBourseData {
 		    .build();
 	private static final String pathSymbols = "src/main/resources/symbol_ticker/symbols.json";
 
-    public static void main(String[] args) {
-        // Example usage
-        try {
-			String start = "2017-01-01";
-			String finish = null;
-			Integer period = 0;
-			Map<String, JSONArray> dataSymbols = getSymbolData("ADH", start, finish, period);
-			System.out.println(dataSymbols.get("ADH").length());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     public static String defineParams(String symbol, String start, String finish, Integer period) {
         try {

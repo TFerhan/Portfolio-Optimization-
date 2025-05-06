@@ -45,7 +45,7 @@ public class DataConsumerService {
 	@Autowired
 	private IndexRTService indexRTService;
 	
-	//@KafkaListener(topics = "intraday-stock-prices", groupId = "group_id")
+	//@KafkaListener(topics = "intraday-stock-prices", groupId = "mongo_db")
 	public void consume(ConsumerRecord<String, byte[]> record) {
 	        try {
 	            // Directly use the byte array received from Kafka, no need for Base64 decoding
@@ -66,7 +66,7 @@ public class DataConsumerService {
 	        }
 	    }
 	
-	//@KafkaListener(topics = "intraday-index-prices", groupId = "group_id")
+	//@KafkaListener(topics = "intraday-index-prices", groupId = "mongo_db")
 	public void consumeIndexRt(ConsumerRecord<String, byte[]> record) {
 		try {
 			byte[] avroData = record.value();
@@ -82,7 +82,7 @@ public class DataConsumerService {
  		}
 	}
 	
-	//@KafkaListener(topics = "daily-index", groupId = "group_id")
+	//@KafkaListener(topics = "daily-index", groupId = "timescale_group")
 	public void consumeDailyIndex(ConsumerRecord<String, byte[]> record) {
 		System.out.println("Consuming daily index data ...");
 		try {
@@ -133,7 +133,7 @@ public class DataConsumerService {
 		
 	}
 
-	//@KafkaListener(topics = "daily-prices", groupId = "group_id")
+	//@KafkaListener(topics = "daily-prices", groupId = "timescale_group")
     public void consumeDailyPrices(ConsumerRecord<String, byte[]> record) {
     	try {
     		
@@ -176,6 +176,8 @@ public class DataConsumerService {
     	return datumReader.read(null, decoder);
     	
     }
+    
+    
     
     private DailyIndexModel mapToEntityDailyIndex(DailyIndex dailyindex) {
 

@@ -124,6 +124,7 @@ public class DailyPriceService {
 	
 	public JSONObject getLatestCapitalisation() {
 		List<MetricByTicker> data = dailyPriceRepo.findLatestCapitalisations();
+		System.out.println("Latest Capitalisation: " + data.size());
 		JSONObject json = new JSONObject();
 		for (Object price : data) {
 			JSONObject obj = new JSONObject();

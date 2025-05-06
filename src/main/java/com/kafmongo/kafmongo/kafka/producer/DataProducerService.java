@@ -16,11 +16,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import com.kafmongo.kafmongo.utils.DailyPriceStock;
-import java.util.Map;
+
+import com.kafmongo.kafmongo.model.PortfolioStats;
 import com.kafmongo.kafmongo.utils.*;
+import java.util.Map;
 
 @Service
 public class DataProducerService {
@@ -215,6 +217,79 @@ public class DataProducerService {
         }
         System.out.println("Message sending completed. Topic: " + topic +
                 " | Processed: " + processed + " | Skipped: " + skipped);
+    }
+    
+    public void setInitialPoWeights(JSONArray data, String topic) {
+    	for(int i = 0; i < data.length(); i++) {
+    		try {
+    			JSONObject obj = (JSONObject) data.getJSONObject(i);
+    			if(obj.has("time") && obj.has("ticker") && obj.has("weight")) {
+    				String time = obj.getString("time");
+    				String ticker = obj.getString("ticker");
+    				String weight = obj.getString("weight");
+    				
+    				WeightStockSchema weightStock = WeightStockSchema.newBuilder()
+    						.setTicker(ticker)
+    						.setWeight(weight)
+    						.setTime(time)
+    						.build();
+    				
+    				ByteArrayOutputStream out = new ByteArrayOutputStream();
+    				DatumWriter<WeightStockSchema> datum = new SpecificDatumWriter<>(WeightStockSchema.class);
+    				BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+    				datum.write(weightStock, encoder);
+    				encoder.flush();
+    				byte[] avroData = out.toByteArray();
+    				
+    				ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<>(topic, ticker, avroData);
+    				producerRecord.headers().add("source", topic.getBytes(StandardCharsets.UTF_8));
+    				kafkaTemplate.send(producerRecord);
+    				
+    				
+    				
+    				
+    			}else {
+                    System.out.println("Skipping record with missing fields: " );
+                    continue;
+                }
+    			
+    			
+    			
+    		}catch (Exception e) {
+                System.err.println("Error processing record: " + e.getMessage());
+                e.printStackTrace();
+                continue;
+            }
+        }
+    	
+    	System.out.println("Message sending completed. Topic: " + topic );
+    		
+    		
+    	
+    }
+    
+    public void sendPortfolioStatsToKafka(PortfolioStats portf, String topic) {
+    	try {
+    		PortfolioStatsSchema portfolioStats = PortfolioStatsSchema.newBuilder()
+    				.setTimestamp(portf.getTimestamp())
+    				.setMeanReturns(portf.getMeanReturns())
+    				.setCovarianceMatrix(portf.getCovarianceMatrix())
+    				.build();
+    		ByteArrayOutputStream out = new ByteArrayOutputStream();
+    		DatumWriter<PortfolioStatsSchema> datum = new SpecificDatumWriter<>(PortfolioStatsSchema.class);
+    		BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+    		datum.write(portfolioStats, encoder);
+    		encoder.flush();
+    		byte[] avroData = out.toByteArray();
+    		ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<>(topic, String.valueOf(portf.getTimestamp()), avroData);
+    		producerRecord.headers().add("source", topic.getBytes(StandardCharsets.UTF_8));
+    		kafkaTemplate.send(producerRecord);
+		} catch (Exception e) {
+			System.err.println("Error processing record: " + e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+    	
     }
     
     

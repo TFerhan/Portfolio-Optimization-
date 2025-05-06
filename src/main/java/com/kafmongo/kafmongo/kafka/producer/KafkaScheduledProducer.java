@@ -5,12 +5,14 @@ import com.kafmongo.kafmongo.api.IndexRealTimeData;
 import com.kafmongo.kafmongo.Service.DailyPriceService;
 import com.kafmongo.kafmongo.api.*;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Service
@@ -34,16 +36,19 @@ public class KafkaScheduledProducer {
     @Autowired
     private DailyIndexData dailyIndexData;
 
-    @Scheduled(fixedRate = 1500000000)  // Runs every 1 minute (60,000 ms)
+    @Scheduled(fixedRate = 15000)  // Runs every 1 minute (60,000 ms)
     public void fetchDataAndSendToKafka() {
     	
     	LocalTime now = LocalTime.now();
         LocalTime marketOpen = LocalTime.of(9, 0);
         LocalTime marketClose = LocalTime.of(3, 0);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String currentTime = LocalDateTime.now().format(formatter);
         //if (now.isAfter(marketOpen) && now.isBefore(marketClose)) {
 	        try {
-	            //JSONArray bourseData = dataFetchService.aralya_data();
-	            //producerService.sendBourseDataToKafka(bourseData, "intraday-stock-prices");
+	            JSONArray bourseData = dataFetchService.aralya_data();
+	            producerService.sendBourseDataToKafka(bourseData, "intraday-stock-prices");
 	
 	            //Map<String, JSONArray> dailyPrices = dailyBourseData.getAllDataSymbols("2025-04-05", null, null);
 	            //producerService.sendDailyPriceDataToKafka(dailyPrices, "daily-prices");
@@ -53,6 +58,65 @@ public class KafkaScheduledProducer {
 	        	
 	        	//Map<String, JSONArray> data = dailyIndexData.getDataOfAllIndex(null, null, 10000);
 	        	//producerService.sendDailyIndexDataToKafka(data, "daily-index");
+	        	
+	        	JSONArray initial_weights = new JSONArray();
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "AKT")
+	        	    .put("weight", "0.152062782216893")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "ATW")
+	        	    .put("weight", "0.0927224366804686")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "BOA")
+	        	    .put("weight", "0.0746007358155665")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "BCP")
+	        	    .put("weight", "0.0558472973286458")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "MDP")
+	        	    .put("weight", "0.0333249293085295")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "MUT")
+	        	    .put("weight", "0.0725159654480422")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "IAM")
+	        	    .put("weight", "0.0273890125096159")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "RIS")
+	        	    .put("weight", "0.0724843896208113")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "TGC")
+	        	    .put("weight", "0.1932864513908656")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "ADI")
+	        	    .put("weight", "0.1667890042224167")
+	        	    .put("time", currentTime));
+
+	        	initial_weights.put(new JSONObject()
+	        	    .put("ticker", "IMO")
+	        	    .put("weight", "0.0589769954581452")
+	        	    .put("time", currentTime));
+
+	            producerService.setInitialPoWeights(initial_weights, "stock_weights");
 	
 	            System.out.println("Data successfully sent to Kafka at: " + System.currentTimeMillis());
 	

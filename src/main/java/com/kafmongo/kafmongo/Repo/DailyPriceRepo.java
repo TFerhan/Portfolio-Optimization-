@@ -91,13 +91,13 @@ public interface DailyPriceRepo extends JpaRepository<DailyPrice, DailyPriceId> 
     nativeQuery = true)
     List<MetricByTicker> getAverageTitresEchangesByTicker();
     
-    @Query(value = "SELECT dp.capitalisation AS metric, dp.ticker " +
-            "FROM DailyPrice dp " +
-            "WHERE (dp.ticker, dp.created) IN (" +
-            "   SELECT dp2.ticker, MAX(dp2.created) " +
-            "   FROM DailyPrice dp2 " +
-            "   GROUP BY dp2.ticker" +
-            ")")
+    @Query(value = "SELECT capitalisation AS metric, ticker " +
+            "FROM daily_price " +
+            "WHERE (ticker, created) IN (" +
+            "   SELECT ticker, MAX(created) " +
+            "   FROM daily_price " +
+            "   GROUP BY ticker" +
+            ")", nativeQuery = true)
     List<MetricByTicker> findLatestCapitalisations();
 
 
