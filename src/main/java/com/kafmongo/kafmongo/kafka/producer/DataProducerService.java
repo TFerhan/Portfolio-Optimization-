@@ -284,6 +284,7 @@ public class DataProducerService {
     		ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<>(topic, String.valueOf(portf.getTimestamp()), avroData);
     		producerRecord.headers().add("source", topic.getBytes(StandardCharsets.UTF_8));
     		kafkaTemplate.send(producerRecord);
+    		System.out.println("Portfolio stats sent to topic: " + topic);
 		} catch (Exception e) {
 			System.err.println("Error processing record: " + e.getMessage());
 			e.printStackTrace();

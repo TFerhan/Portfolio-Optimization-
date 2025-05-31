@@ -169,6 +169,8 @@
             <artifactId>flink-connector-kafka</artifactId>
             <version>1.16.0</version>
         </dependency>
+        
+
 
         <!-- Flink Table API -->
         <dependency>
