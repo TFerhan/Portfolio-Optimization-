@@ -41,6 +41,9 @@ public class KafkaScheduledProducer {
     
     @Autowired
     private DailyIndexData dailyIndexData;
+    
+    private boolean portfolioStatsSent = false;
+
 
     @Scheduled(fixedRate = 2000)  // Runs every 1 minute (60,000 ms)
     public void fetchDataAndSendToKafka() {
@@ -53,8 +56,8 @@ public class KafkaScheduledProducer {
 		String currentTime = LocalDateTime.now().format(formatter);
         //if (now.isAfter(marketOpen) && now.isBefore(marketClose)) {
 	        try {
-	            //JSONArray bourseData = dataFetchService.aralya_data();
-	            //producerService.sendBourseDataToKafka(bourseData, "intraday-stock-prices");
+	            JSONArray bourseData = dataFetchService.aralya_data();
+	            producerService.sendBourseDataToKafka(bourseData, "intraday-stock-prices");
 	
 	            //Map<String, JSONArray> dailyPrices = dailyBourseData.getAllDataSymbols("2025-04-05", null, null);
 	            //producerService.sendDailyPriceDataToKafka(dailyPrices, "daily-prices");
@@ -78,6 +81,7 @@ public class KafkaScheduledProducer {
 	            
 	            
 	            PortfolioStats portfolioStats = new PortfolioStats();
+	            portfolioStats.setPortfolioId("portf1");
 	            
 	            portfolioStats.setTimestamp(System.currentTimeMillis());
 	            
@@ -96,8 +100,14 @@ public class KafkaScheduledProducer {
 	            portfolioStats.setMeanReturns(meanReturns);
 	            
 	            portfolioStats.setCovarianceMatrix(matrix);
+	            if (!portfolioStatsSent) {
+	                
+	                producerService.sendPortfolioStatsToKafka(portfolioStats, "portfStats");
+	                portfolioStatsSent = true;
+	            }
+
 	            
-	            producerService.sendPortfolioStatsToKafka(portfolioStats, "portf_stats");
+	            
 	        	JSONArray initial_weights = new JSONArray();
 
 	        	initial_weights.put(new JSONObject()
@@ -155,9 +165,9 @@ public class KafkaScheduledProducer {
 	        	    .put("weight", "0.0589769954581452")
 	        	    .put("time", currentTime));
 
-	            //producerService.setInitialPoWeights(initial_weights, "stock_weights");
+	            producerService.setInitialPoWeights(initial_weights, "stockWeights");
 	
-	            //System.out.println("Data successfully sent to Kafka at: " + System.currentTimeMillis());
+	            System.out.println("Data successfully sent to Kafka at: " + System.currentTimeMillis());
 	
 	        } catch (Exception e) {
 	            e.printStackTrace();

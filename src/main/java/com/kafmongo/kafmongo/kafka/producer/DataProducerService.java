@@ -227,11 +227,13 @@ public class DataProducerService {
     				String time = obj.getString("time");
     				String ticker = obj.getString("ticker");
     				String weight = obj.getString("weight");
+    				String portfolioId = obj.has("portfolio_id") ? obj.getString("portfolio_id") : "portf1";
     				
     				WeightStockSchema weightStock = WeightStockSchema.newBuilder()
     						.setTicker(ticker)
     						.setWeight(weight)
     						.setTime(time)
+    						.setPortfolioId(portfolioId)
     						.build();
     				
     				ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -274,6 +276,7 @@ public class DataProducerService {
     				.setTimestamp(portf.getTimestamp())
     				.setMeanReturns(portf.getMeanReturns())
     				.setCovarianceMatrix(portf.getCovarianceMatrix())
+    				.setPortfolioId(portf.getPortfolioId())
     				.build();
     		ByteArrayOutputStream out = new ByteArrayOutputStream();
     		DatumWriter<PortfolioStatsSchema> datum = new SpecificDatumWriter<>(PortfolioStatsSchema.class);

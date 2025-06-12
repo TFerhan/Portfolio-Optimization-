@@ -8,6 +8,10 @@
       "type": "long"
     },
     {
+      "name": "portfolio_id",
+      "type": "string"
+    },
+    {
       "name": "meanReturns",
       "type": {
         "type": "map",

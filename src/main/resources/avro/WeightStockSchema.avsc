@@ -8,6 +8,10 @@
       "type": "string"
     },
     {
+    "name" : "portfolio_id",
+    "type" : "string"},
+    
+    {
       "name": "ticker",
       "type": "string"
     },

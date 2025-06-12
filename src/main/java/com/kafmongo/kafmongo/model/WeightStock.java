@@ -10,6 +10,7 @@ public class WeightStock {
 	private float weight;
 	private String ticker;
 	private Date time;
+	private String portfolio_id;
 	
 	WeightStock(){
 		
@@ -17,6 +18,14 @@ public class WeightStock {
 	
 	public float getWeight() {
 		return this.weight;}
+	
+	public String getPortfolioId() {
+		return this.portfolio_id;
+	}
+	
+	public void setPortfolioId(CharSequence c) {
+		this.portfolio_id = c.toString();
+	}
 	
 	public String getTicker() {
 		return this.ticker;
