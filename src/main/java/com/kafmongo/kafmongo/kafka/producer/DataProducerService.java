@@ -296,5 +296,26 @@ public class DataProducerService {
     	
     }
     
+    public void sendWeightsToKafka(WeightSchema weights, String topic) {
+    	try {
+    		
+    		ByteArrayOutputStream out = new ByteArrayOutputStream();
+    		DatumWriter<WeightSchema> datum = new SpecificDatumWriter<>(WeightSchema.class);
+    		BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+    		datum.write(weights, encoder);
+    		encoder.flush();
+    		byte[] avroData = out.toByteArray();
+    		ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<>(topic, String.valueOf(weights.getTimestamp()), avroData);
+    		producerRecord.headers().add("source", topic.getBytes(StandardCharsets.UTF_8));
+    		kafkaTemplate.send(producerRecord);
+    		System.out.println("Portfolio stats sent to topic: " + topic);
+		} catch (Exception e) {
+			System.err.println("Error processing record: " + e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+    	
+    }
+    
     
 }

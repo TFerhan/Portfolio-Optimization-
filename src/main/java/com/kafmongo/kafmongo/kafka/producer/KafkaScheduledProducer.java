@@ -3,6 +3,7 @@ package com.kafmongo.kafmongo.kafka.producer;
 import com.kafmongo.kafmongo.api.DataFetchService;
 import com.kafmongo.kafmongo.api.IndexRealTimeData;
 import com.kafmongo.kafmongo.model.PortfolioStats;
+import com.kafmongo.kafmongo.utils.WeightSchema;
 import com.kafmongo.kafmongo.Service.DailyPriceService;
 import com.kafmongo.kafmongo.api.*;
 import org.json.JSONArray;
@@ -42,6 +43,8 @@ public class KafkaScheduledProducer {
     @Autowired
     private DailyIndexData dailyIndexData;
     
+    
+    
     private boolean portfolioStatsSent = false;
 
 
@@ -58,6 +61,8 @@ public class KafkaScheduledProducer {
 	        try {
 	            JSONArray bourseData = dataFetchService.aralya_data();
 	            producerService.sendBourseDataToKafka(bourseData, "intraday-stock-prices");
+	            
+				
 	
 	            //Map<String, JSONArray> dailyPrices = dailyBourseData.getAllDataSymbols("2025-04-05", null, null);
 	            //producerService.sendDailyPriceDataToKafka(dailyPrices, "daily-prices");
@@ -164,8 +169,26 @@ public class KafkaScheduledProducer {
 	        	    .put("ticker", "IMO")
 	        	    .put("weight", "0.0589769954581452")
 	        	    .put("time", currentTime));
+	        	
+	        	Map<CharSequence, Double> weightsMap = new HashMap<>();
 
-	            producerService.setInitialPoWeights(initial_weights, "stockWeights");
+	        	for (int i = 0; i < initial_weights.length(); i++) {
+	        	    JSONObject obj = initial_weights.getJSONObject(i);
+	        	    CharSequence ticker = obj.getString("ticker");
+	        	    double weight = Double.parseDouble(obj.getString("weight"));
+	        	    weightsMap.put(ticker, weight);
+	        	}
+	        	
+	        	WeightSchema weights = WeightSchema.newBuilder()
+						.setPortfolioId("portf1")
+						.setTimestamp(System.currentTimeMillis())
+						.setWeights(weightsMap)
+						.build();
+	        	
+	        	producerService.sendWeightsToKafka(weights, "Weights");
+
+
+	            //producerService.setInitialPoWeights(initial_weights, "stockWeights");
 	
 	            System.out.println("Data successfully sent to Kafka at: " + System.currentTimeMillis());
 	
