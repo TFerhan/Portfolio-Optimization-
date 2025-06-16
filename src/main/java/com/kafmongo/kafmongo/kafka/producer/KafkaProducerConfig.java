@@ -42,13 +42,28 @@ public class KafkaProducerConfig {
         
         @Bean
 		public NewTopic intradayStock() {
-			return new NewTopic("intraday-stock-prices", 11, (short) 2);
+			return new NewTopic("intraday-stock-prices", 3, (short) 1);
 		}
         
         @Bean
 		public NewTopic weights() {
-			return new NewTopic("stock_weights", 5, (short) 1);
+			return new NewTopic("Weights", 3, (short) 1);
 		}
+        
+        @Bean
+		public NewTopic portfolioMetrics() {
+			return new NewTopic("portfMetrics", 3, (short) 1);
+		}
+        
+        @Bean
+        public NewTopic portfolioStats() {
+        	return new NewTopic("portfStats", 3, (short) 1);
+        }
+        
+        @Bean
+        public NewTopic portfUpdatedStats() {
+        	return new NewTopic("portfUpdatedStats", 3, (short) 1);
+        }
         
         
         

@@ -226,7 +226,7 @@
                             <sourceDirectory>src/main/resources/avro</sourceDirectory>
                             <outputDirectory>${project.basedir}/src/main/java/com/kafmongo/kafmongo/utils</outputDirectory>
                             <includes>
-                            	<include>WeightSchema.avsc</include>
+                            	<include>PortfolioMetrics.avsc</include>
                         	</includes>
                         </configuration>
                     </execution>

@@ -46,6 +46,7 @@ public class KafkaScheduledProducer {
     
     
     private boolean portfolioStatsSent = false;
+    private boolean weightsSent = false;
 
 
     @Scheduled(fixedRate = 2000)  // Runs every 1 minute (60,000 ms)
@@ -108,7 +109,7 @@ public class KafkaScheduledProducer {
 	            if (!portfolioStatsSent) {
 	                
 	                producerService.sendPortfolioStatsToKafka(portfolioStats, "portfStats");
-	                portfolioStatsSent = true;
+	               portfolioStatsSent = true;
 	            }
 
 	            
@@ -185,7 +186,10 @@ public class KafkaScheduledProducer {
 						.setWeights(weightsMap)
 						.build();
 	        	
-	        	producerService.sendWeightsToKafka(weights, "Weights");
+	        	if (!weightsSent) {
+					producerService.sendWeightsToKafka(weights, "Weights");
+					weightsSent = true;
+	        	}
 
 
 	            //producerService.setInitialPoWeights(initial_weights, "stockWeights");
